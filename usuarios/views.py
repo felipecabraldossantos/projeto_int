@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from usuarios.models import Usuario
 from django.contrib.auth.decorators import login_required
 
+
+
 def login_view(request):
 
     if request.method == 'POST':
@@ -18,7 +20,7 @@ def login_view(request):
 
         if usuario is not None:
             login(request, usuario)
-            return redirect('home')
+            return redirect('perfil')
 
     return render(request, 'login.html')
 
@@ -43,3 +45,7 @@ def cadastro_view(request):
         return redirect('login')
 
     return render(request, 'cadastro.html')
+
+@login_required
+def perfil_view(request):
+    return render(request, 'perfil.html')

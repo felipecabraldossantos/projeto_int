@@ -36,30 +36,34 @@ class Produto(models.Model):
         return self.nome_produto
     
 class Anuncio(models.Model):
-    titulo = models.CharField(max_length=30)
-    descricao = models.CharField(max_length=200)
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
     preco = models.DecimalField(
         max_digits=10,
         decimal_places=2
     )
 
-    data_publicacao = models.DateTimeField(
-        auto_now_add=True
-    )
+    descricao = models.TextField()
 
-    status = models.CharField(max_length=7)
+    status = models.CharField(
+        max_length=10,
+        default='ATIVO'
+    )
 
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE
     )
 
-    class Meta:
-        db_table = 'anuncio'
+    data_publicacao = models.DateTimeField(
+        auto_now_add=True
+    )
 
-    def __str__(self):
-        return self.titulo
-    
 class Favorito(models.Model):
     usuario = models.ForeignKey(
         Usuario,

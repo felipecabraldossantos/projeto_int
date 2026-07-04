@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anúncios</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Anúncios</h1>
+
+        {% for anuncio in page_obj %}
+
+            <div class="anuncio">
+
+                <h2>{{ anuncio.produto.nome_produto }}</h2>
+
+                <p><strong>Descrição:</strong> {{ anuncio.descricao }}</p>
+
+                <p><strong>Preço:</strong> R$ {{ anuncio.preco }}</p>
+
+                <p><strong>Vendedor:</strong> {{ anuncio.usuario.username }}</p>
+
+                <hr>
+
+            </div>
+
+        {% empty %}
+
+            <p>Nenhum anúncio encontrado.</p>
+
+        {% endfor %}
+
+        <div class="paginacao">
+
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">
+                    ← Anterior
+                </a>
+            {% endif %}
+
+            <span>
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">
+                    Próxima →
+                </a>
+            {% endif %}
+
+        </div>
+
+        <br>
+
+        <a href="{% url 'perfil' %}">
+            Voltar ao perfil
+        </a>
+
+    </div>
+
+</body>
+</html>
