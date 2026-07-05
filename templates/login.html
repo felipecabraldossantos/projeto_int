@@ -1,53 +1,52 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Marketplace</title>
+        <link rel="stylesheet" href="{% static 'css/style_login.css' %}">
+    </head>
+    <body>
+    <div class="overlay">
+        <div class="login-card">
+            <div class="logo">
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+                <h1>Marketplace</h1>
 
-<body>
+                <p>Colecionáveis e muito mais.</p>
 
-<div class="login-box">
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Usuário"
+                    required
+                >
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Senha"
+                    required
+                >
+                <button type="submit">
+                    Entrar
+                </button>
 
-    <h2>Login</h2>
+            </form>
+            <div class="links">
 
-    <form method="POST">
+                <a href="{% url 'home' %}">
+                    Entrar sem cadastro
+                </a>
 
-        {% csrf_token %}
-
-        <input
-            type="text"
-            name="username"
-            placeholder="Usuário"
-            required
-        >
-
-        <input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            required
-        >
-
-        <input type="submit" value="Entrar" href="{% url 'perfil' %}">
-
-    </form>
-
-    <a href="{% url 'home' %}">
-        Entrar sem cadastro
-    </a>
-
-    <br><br>
-
-    <a href="{% url 'cadastro' %}">
-        Ainda não possui cadastro?
-    </a>
-
-</div>
-
-</body>
+                <a href="{% url 'cadastro' %}">
+                    Criar uma conta
+                </a>
+            </div>
+        </div>
+    </div>
+    </body>
 </html>

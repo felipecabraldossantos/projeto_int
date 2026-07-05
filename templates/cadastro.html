@@ -4,22 +4,40 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cadastro de usuário</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <title>Criar Conta</title>
+        <link rel="stylesheet" href="{% static 'css/style_cadastro.css' %}">
     </head>
     <body>
-        <div class="login-box">
-            <h2>Cadastro de usuário</h2>
+    <div class="overlay">
+
+        <div class="cadastro-card">
+
+            <div class="logo">
+
+                <h1>Marketplace</h1>
+
+                <p>Crie sua conta gratuitamente.</p>
+
+            </div>
+
             {% if erro %}
-                <p style="color:red">{{ erro }}</p>
+
+                <div class="erro">
+
+                    {{ erro }}
+
+                </div>
+
             {% endif %}
+
             <form method="POST">
+
                 {% csrf_token %}
 
                 <input
                     type="text"
                     name="username"
-                    placeholder="Usuário"
+                    placeholder="Nome de usuário"
                     required
                 >
 
@@ -42,29 +60,45 @@
                     type="password"
                     id="confirm_password"
                     name="confirmar_senha"
-                    placeholder="Repita a senha"
+                    placeholder="Confirmar senha"
                     required
                 >
 
-                <div id="password-rules" style="display:none">
+                <div id="password-rules" class="password-box">
+
+                    <strong>Sua senha deve conter:</strong>
 
                     <p id="length">✔ Pelo menos 8 caracteres</p>
 
-                    <p id="lower">✔ Letra minúscula</p>
+                    <p id="lower">✔ Uma letra minúscula</p>
 
-                    <p id="upper">✔ Letra maiúscula</p>
+                    <p id="upper">✔ Uma letra maiúscula</p>
 
-                    <p id="number">✔ Número</p>
+                    <p id="number">✔ Um número</p>
 
-                    <p id="special">✔ Caractere especial</p>
+                    <p id="special">✔ Um caractere especial</p>
 
                 </div>
 
-                <input type="submit" value="Cadastrar">
+                <button type="submit">
+
+                    Criar Conta
+
+                </button>
 
             </form>
-            <a href="{% url 'logout' %}">Voltar</a>
+
+            <div class="links">
+
+                <a href="{% url 'logout' %}">
+                    ← Voltar para o Login
+                </a>
+
+            </div>
+
         </div>
-    </body>
+
+    </div>
     <script src="{% static 'js/cadastro.js' %}"></script>
+    </body>
 </html>

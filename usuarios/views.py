@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from usuarios.models import Usuario
 from django.contrib.auth.decorators import login_required
-
+from marketplace.models import Produto, Anuncio
 
 
 def login_view(request):
@@ -69,4 +69,25 @@ def cadastro_view(request):
 
 @login_required
 def perfil_view(request):
-    return render(request, 'perfil.html')
+
+    total_itens = Produto.objects.filter(
+        usuario=request.user
+    ).count()
+
+    total_anuncios = Anuncio.objects.filter(
+        usuario=request.user
+    ).count()
+
+    ultimos_anuncios = Anuncio.objects.filter(
+        usuario=request.user
+    ).order_by('-id')[:4]
+
+    return render(
+        request,
+        'perfil.html',
+        {
+            'total_itens': total_itens,
+            'total_anuncios': total_anuncios,
+            'ultimos_anuncios': ultimos_anuncios,
+        }
+    )

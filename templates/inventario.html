@@ -4,33 +4,87 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inventário</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <title>Meu Inventário</title>
+        <link rel="stylesheet" href="{% static 'css/style_inventario.css' %}">
     </head>
     <body>
-        <div class="login-box">
-            <h2>Meu Inventário</h2>
+    <div class="overlay">
 
-            {% for produto in produtos %}
+        <div class="container">
+
+            <div class="topo">
 
                 <div>
-                    <h3>{{ produto.nome_produto }}</h3>
-
-                    <p>Modelo: {{ produto.modelo }}</p>
-                    <p>Ano: {{ produto.ano }}</p>
-                    <p>Série: {{ produto.serie }}</p>
-                    <p>Raridade: {{ produto.raridade }}</p>
-                    <p>Categoria: {{ produto.categoria.nome_categoria }}</p>
-
-                    <hr>
+                    <h1>Meu Inventário</h1>
+                    <p>Todos os itens cadastrados na sua coleção.</p>
                 </div>
 
-            {% empty %}
+                <div class="acoes">
 
-                <p>Você ainda não possui itens cadastrados.</p>
+                    <a href="{% url 'cadastro_item' %}" class="botao">
+                        + Novo Item
+                    </a>
 
-            {% endfor %}
-            <a href="{% url 'perfil' %}">Voltar</a>
+                    <a href="{% url 'perfil' %}" class="botao-voltar">
+                        ← Perfil
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% if produtos %}
+
+                <div class="grid">
+
+                    {% for produto in produtos %}
+
+                        <div class="card">
+
+                            <img
+                                src="{% static 'img/sem_foto.png' %}"
+                                alt="Sem Foto"
+                            >
+
+                            <h2>{{ produto.nome_produto }}</h2>
+
+                            <span class="categoria">
+                                {{ produto.categoria.nome_categoria }}
+                            </span>
+
+                            <div class="info">
+
+                                <p><strong>Modelo:</strong> {{ produto.modelo }}</p>
+
+                                <p><strong>Ano:</strong> {{ produto.ano }}</p>
+
+                                <p><strong>Série:</strong> {{ produto.serie }}</p>
+
+                                <p><strong>Raridade:</strong> {{ produto.raridade }}</p>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="vazio">
+
+                    <img src="{% static 'img/sem_foto.png' %}">
+
+                    <h2>Nenhum item cadastrado</h2>
+
+                    <p>Cadastre seu primeiro item para começar sua coleção.</p>
+
+                </div>
+
+            {% endif %}
+
         </div>
+    </div>
     </body>
 </html>

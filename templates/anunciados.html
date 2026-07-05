@@ -1,69 +1,126 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anúncios</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Marketplace</title>
+        <link rel="stylesheet" href="{% static 'css/style_anunciados.css' %}">
+    </head>
+    <body>
+    <div class="overlay">
+        <div class="container">
+            <header class="cabecalho">
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+                <div>
 
-<body>
+                    <h1>Marketplace</h1>
 
-    <div class="container">
+                    <p>Explore os anúncios disponíveis.</p>
 
-        <h1>Anúncios</h1>
+                </div>
 
-        {% for anuncio in page_obj %}
+                <a href="{% url 'perfil' %}" class="voltar">
 
-            <div class="anuncio">
+                    ← Perfil
 
-                <h2>{{ anuncio.produto.nome_produto }}</h2>
+                </a>
 
-                <p><strong>Descrição:</strong> {{ anuncio.descricao }}</p>
+            </header>
 
-                <p><strong>Preço:</strong> R$ {{ anuncio.preco }}</p>
+            {% if page_obj %}
 
-                <p><strong>Vendedor:</strong> {{ anuncio.usuario.username }}</p>
+                <div class="grid">
 
-                <hr>
+                    {% for anuncio in page_obj %}
 
+                        <div class="card">
+
+                            <img src="{% static 'img/sem_foto.png' %}" alt="Produto">
+
+                            <div class="conteudo">
+
+                                <h2>{{ anuncio.produto.nome_produto }}</h2>
+
+                                <p class="categoria">
+
+                                    {{ anuncio.produto.categoria.nome_categoria }}
+
+                                </p>
+
+                                <p class="descricao">
+
+                                    {{ anuncio.descricao }}
+
+                                </p>
+
+                                <p class="vendedor">
+
+                                    👤 {{ anuncio.usuario.username }}
+
+                                </p>
+
+                                <h3>
+
+                                    R$ {{ anuncio.preco }}
+
+                                </h3>
+
+                                <button>
+
+                                    Ver anúncio
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="vazio">
+
+                    <img src="{% static 'img/sem_foto.png' %}">
+
+                    <h2>Nenhum anúncio disponível.</h2>
+
+                </div>
+
+            {% endif %}
+
+            <div class="paginacao">
+
+                {% if page_obj.has_previous %}
+
+                    <a href="?page={{ page_obj.previous_page_number }}">
+
+                        ← Anterior
+
+                    </a>
+
+                {% endif %}
+
+                <span>
+
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+
+                </span>
+
+                {% if page_obj.has_next %}
+
+                    <a href="?page={{ page_obj.next_page_number }}">
+
+                        Próxima →
+
+                    </a>
+
+                {% endif %}
             </div>
-
-        {% empty %}
-
-            <p>Nenhum anúncio encontrado.</p>
-
-        {% endfor %}
-
-        <div class="paginacao">
-
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">
-                    ← Anterior
-                </a>
-            {% endif %}
-
-            <span>
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">
-                    Próxima →
-                </a>
-            {% endif %}
-
         </div>
-
-        <br>
-
-        <a href="{% url 'perfil' %}">
-            Voltar ao perfil
-        </a>
-
-    </div>
-
-</body>
+        </div>
+    </body>
 </html>

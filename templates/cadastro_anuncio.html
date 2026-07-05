@@ -2,55 +2,81 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar anúncio</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Publicar Anúncio</title>
+        <link rel="stylesheet" href="{% static 'css/style_cadastro_anuncio.css' %}">
+    </head>
+    <body>
+        <div class="overlay">
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+            <div class="cadastro-card">
 
-<body>
+                <div class="logo">
 
-<div class="login-box">
+                    <h1>Publicar Anúncio</h1>
 
-    <h2>Cadastrar anúncio</h2>
+                    <p>Escolha um item do seu inventário e coloque-o à venda.</p>
 
-    <form method="POST">
-        {% csrf_token %}
+                </div>
 
-        <select name="produto">
+                <form method="POST">
 
-            {% for produto in produtos %}
-                <option value="{{ produto.id }}">
-                    {{ produto.nome_produto }}
-                </option>
-            {% endfor %}
+                    {% csrf_token %}
 
-        </select>
+                    <label>Produto</label>
 
-        <input
-            type="number"
-            step="0.01"
-            name="preco"
-            placeholder="Preço"
-        >
+                    <select name="produto">
 
-        <textarea
-            name="descricao"
-            placeholder="Descrição do anúncio"
-        ></textarea>
+                        {% for produto in produtos %}
 
-        <button type="submit">
-            Publicar anúncio
-        </button>
+                            <option value="{{ produto.id }}">
+                                {{ produto.nome_produto }}
+                            </option>
 
-    </form>
+                        {% endfor %}
 
-    <a href="{% url 'perfil' %}">
-        Voltar
-    </a>
+                    </select>
 
-</div>
+                    <label>Preço</label>
 
-</body>
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="preco"
+                        placeholder="0,00"
+                        required
+                    >
+
+                    <label>Descrição do anúncio</label>
+
+                    <textarea
+                        name="descricao"
+                        rows="6"
+                        placeholder="Descreva o estado do produto, observações, defeitos, acessórios, etc."
+                    ></textarea>
+
+                    <button type="submit">
+
+                        📢 Publicar anúncio
+
+                    </button>
+
+                </form>
+
+                <div class="links">
+
+                    <a href="{% url 'perfil' %}">
+
+                        ← Voltar ao Perfil
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </body>
 </html>

@@ -1,0 +1,149 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:url("../img/wallpaper.jpg") center center;
+    background-size:cover;
+    min-height:100vh;
+}
+
+.overlay{
+    background:rgba(0,0,0,.60);
+    min-height:100vh;
+    padding:40px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+.topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+    color:white;
+}
+
+.topo h1{
+    font-size:42px;
+    color:#ff8a00;
+    margin-bottom:10px;
+}
+
+.topo p{
+    color:#ddd;
+}
+
+.acoes{
+    display:flex;
+    gap:15px;
+}
+
+.botao,
+.botao-voltar{
+    padding:14px 22px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+    transition:.25s;
+}
+
+.botao{
+    background:#ff8a00;
+}
+
+.botao:hover{
+    background:#ff9900;
+}
+
+.botao-voltar{
+    background:#333;
+}
+
+.botao-voltar:hover{
+    background:#444;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(20,20,20,.80);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:25px;
+    transition:.3s;
+    color:white;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border:1px solid #ff8a00;
+}
+
+.card img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    display:block;
+    margin:auto;
+    margin-bottom:20px;
+    border-radius:50%;
+    border:3px solid #ff8a00;
+}
+
+.card h2{
+    text-align:center;
+    color:#ff8a00;
+    margin-bottom:10px;
+}
+
+.categoria{
+    display:block;
+    text-align:center;
+    background:#ff8a00;
+    color:white;
+    border-radius:30px;
+    padding:6px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.info{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.info p{
+    color:#ddd;
+}
+
+.vazio{
+    width:450px;
+    margin:80px auto;
+    text-align:center;
+    color:white;
+    background:rgba(20,20,20,.80);
+    padding:40px;
+    border-radius:20px;
+}
+
+.vazio img{
+    width:120px;
+    margin-bottom:20px;
+}
+
+.vazio h2{
+    color:#ff8a00;
+    margin-bottom:15px;
+}
