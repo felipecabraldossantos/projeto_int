@@ -34,7 +34,28 @@ def cadastro_view(request):
 
         username = request.POST.get('username')
         email = request.POST.get('email')
+
         senha = request.POST.get('senha')
+        confirmar = request.POST.get('confirmar_senha')
+
+        if senha != confirmar:
+            return render(
+                request,
+                'cadastro.html',
+                {
+                    'erro': 'As senhas não coincidem.'
+                }
+            )
+
+        if Usuario.objects.filter(username=username).exists():
+            return render(request, 'cadastro.html', {
+                'erro': 'Este nome de usuário já está em uso.'
+            })
+
+        if Usuario.objects.filter(email=email).exists():
+            return render(request, 'cadastro.html', {
+                'erro': 'Este e-mail já está cadastrado.'
+            })
 
         Usuario.objects.create_user(
             username=username,
