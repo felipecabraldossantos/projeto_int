@@ -36,7 +36,7 @@
 
                         <div class="card">
 
-                            <img src="{% static 'img/sem_foto.png' %}" alt="Produto">
+                            <img src="{{ anuncio.produto.imagens.first.imagem.url }}" alt="Produto">
 
                             <div class="conteudo">
 
@@ -65,13 +65,17 @@
                                     R$ {{ anuncio.preco }}
 
                                 </h3>
-
                                 <button>
-
-                                    Ver anúncio
-
+                                    {% if user.is_authenticated %}
+                                        <a href="{% url 'anuncio' anuncio.id %}">
+                                            Ver anúncio
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'login' %}">
+                                            Faça login para ver detalhes
+                                        </a>
+                                    {% endif %}
                                 </button>
-
                             </div>
 
                         </div>

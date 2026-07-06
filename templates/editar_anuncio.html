@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Anúncio</title>
+    <link rel="stylesheet" href="{% static 'css/style_editar_anuncio.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Editar Anúncio</h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Preço</label>
+        <input
+            type="number"
+            step="0.01"
+            name="preco"
+            value="{{ anuncio.preco }}"
+        >
+
+        <label>Descrição</label>
+        <textarea name="descricao" rows="5">
+            {{ anuncio.descricao }}
+        </textarea>
+
+        <button type="submit">
+            Salvar alterações
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

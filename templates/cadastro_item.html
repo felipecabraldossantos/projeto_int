@@ -18,8 +18,12 @@
                 <p>Adicione um item ao seu inventário.</p>
 
             </div>
-
-            <form method="POST">
+            {% if erro %}
+                <div class="erro">
+                    {{ erro }}
+                </div>
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
 
                 {% csrf_token %}
 
@@ -30,6 +34,21 @@
                     required
                 >
 
+                <label class="upload-label">
+                    Fotos do produto (até 5)
+                </label>
+
+                <input
+                    id="imagens"
+                    type="file"
+                    name="imagens"
+                    multiple
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+                <div id="preview-imagens">
+
+                </div>
                 <input
                     type="text"
                     name="modelo"
@@ -89,5 +108,6 @@
         </div>
 
     </div>
+    <script src="{% static 'js/cadastro_item.js' %}"></script>
     </body>
 </html>

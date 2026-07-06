@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+
+        <meta charset="UTF-8">
+        <title>{{ anuncio.produto.nome_produto }}</title>
+
+        <link rel="stylesheet" href="{% static 'css/style_anuncio.css' %}">
+
+    </head>
+    <body>
+        <div class="overlay">
+
+        <div class="container">
+
+            <a href="{% url 'anunciados' %}" class="voltar">
+                ← Voltar
+            </a>
+
+            <div class="conteudo">
+
+                <div class="galeria">
+
+                    {% if anuncio.produto.imagens.first %}
+
+                        <img
+                            class="principal"
+                            src="{{ anuncio.produto.imagens.first.imagem.url }}"
+                        >
+
+                    {% endif %}
+
+                    <div class="miniaturas">
+
+                        {% for imagem in anuncio.produto.imagens.all %}
+
+                            <img src="{{ imagem.imagem.url }}">
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <div class="informacoes">
+
+                    <h1>{{ anuncio.produto.nome_produto }}</h1>
+
+                    <h2>R$ {{ anuncio.preco }}</h2>
+
+                    <p><strong>Modelo:</strong> {{ anuncio.produto.modelo }}</p>
+
+                    <p><strong>Ano:</strong> {{ anuncio.produto.ano }}</p>
+
+                    <p><strong>Série:</strong> {{ anuncio.produto.serie }}</p>
+
+                    <p><strong>Raridade:</strong> {{ anuncio.produto.raridade }}</p>
+
+                    <p><strong>Categoria:</strong> {{ anuncio.produto.categoria.nome_categoria }}</p>
+
+                    <p><strong>Vendedor:</strong> {{ anuncio.usuario.username }}</p>
+
+                    <p><strong>Publicado em:</strong> {{ anuncio.data_publicacao }}</p>
+
+                    {% if anuncio.usuario.whatsapp %}
+                        <a
+                            href="https://wa.me/55{{ anuncio.usuario.whatsapp }}"
+                            target="_blank"
+                            class="botao-whatsapp"
+                        >
+                            💬 Falar com o vendedor
+                        </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="descricao">
+
+                <h2>Descrição</h2>
+
+                <p>{{ anuncio.descricao }}</p>
+
+            </div>
+            {% if anuncio.usuario == user %}
+
+                <a href="{% url 'editar_anuncio' anuncio.id %}">
+                    Editar anúncio
+                </a>
+                <br>
+                <a href="{% url 'vender_anuncio' anuncio.id %}" class="btn-vendido">
+                    Marcar como vendido
+                </a>
+
+            {% endif %}
+        </div>
+        </div>
+    </body>
+</html>

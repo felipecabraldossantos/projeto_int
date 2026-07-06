@@ -115,3 +115,12 @@ button:hover{
 .links a:hover{
     color:#ff8a00;
 }
+
+.erro{
+    background:#8b1e1e;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    text-align:center;
+}

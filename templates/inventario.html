@@ -41,10 +41,9 @@
 
                         <div class="card">
 
-                            <img
-                                src="{% static 'img/sem_foto.png' %}"
-                                alt="Sem Foto"
-                            >
+                            {% if produto.imagens.first %}
+                                <img src="{{ produto.imagens.first.imagem.url }}">
+                            {% endif %}
 
                             <h2>{{ produto.nome_produto }}</h2>
 

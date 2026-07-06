@@ -34,18 +34,15 @@ def cadastro_view(request):
 
         username = request.POST.get('username')
         email = request.POST.get('email')
+        whatsapp = request.POST.get('whatsapp')
 
         senha = request.POST.get('senha')
         confirmar = request.POST.get('confirmar_senha')
 
         if senha != confirmar:
-            return render(
-                request,
-                'cadastro.html',
-                {
-                    'erro': 'As senhas não coincidem.'
-                }
-            )
+            return render(request, 'cadastro.html', {
+                'erro': 'As senhas não coincidem.'
+            })
 
         if Usuario.objects.filter(username=username).exists():
             return render(request, 'cadastro.html', {
@@ -60,7 +57,8 @@ def cadastro_view(request):
         Usuario.objects.create_user(
             username=username,
             email=email,
-            password=senha
+            password=senha,
+            whatsapp=whatsapp
         )
 
         return redirect('login')

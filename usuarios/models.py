@@ -5,5 +5,8 @@ from django.contrib.auth.models import AbstractUser
 class Usuario(AbstractUser):
     tipo_usuario = models.BooleanField(default=False)
 
-    class Meta:
-        db_table = 'usuario'
+    whatsapp = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )

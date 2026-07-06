@@ -1,18 +1,31 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Produto, Categoria, Anuncio
+from .models import Produto, Categoria, Anuncio, ProdutoImagem
 from django.core.paginator import Paginator
 
 
-def home_view(request):
-    return render(request, 'home.html')
 
 @login_required
 def cadastro_item_view(request):
 
+    categorias = Categoria.objects.all()
+
     if request.method == 'POST':
 
-        Produto.objects.create(
+        imagens = request.FILES.getlist('imagens')
+
+        if len(imagens) > 5:
+
+            return render(
+                request,
+                'cadastro_item.html',
+                {
+                    'categorias': categorias,
+                    'erro': 'Você pode cadastrar no máximo 5 imagens.'
+                }
+            )
+
+        produto = Produto.objects.create(
             nome_produto=request.POST.get('nome_produto'),
             modelo=request.POST.get('modelo'),
             ano=request.POST.get('ano'),
@@ -23,10 +36,15 @@ def cadastro_item_view(request):
             usuario=request.user
         )
 
+        for imagem in imagens:
+
+            ProdutoImagem.objects.create(
+                produto=produto,
+                imagem=imagem
+            )
+
         return redirect('perfil')
-
-    categorias = Categoria.objects.all()
-
+    
     return render(
         request,
         'cadastro_item.html',
@@ -100,3 +118,62 @@ def anunciados_view(request):
             'page_obj': page_obj
         }
     )
+
+@login_required
+def anuncio_view(request, id):
+
+    anuncio = get_object_or_404(
+        Anuncio.objects.select_related(
+            'produto',
+            'produto__categoria',
+            'usuario'
+        ).prefetch_related(
+            'produto__imagens'
+        ),
+        id=id
+    )
+
+    return render(
+        request,
+        'anuncio.html',
+        {
+            'anuncio': anuncio
+        }
+    )
+
+@login_required
+def editar_anuncio_view(request, id):
+
+    anuncio = get_object_or_404(
+        Anuncio.objects.select_related('produto'),
+        id=id
+    )
+
+    if anuncio.usuario != request.user:
+        return redirect('anunciados')
+
+    if request.method == 'POST':
+
+        anuncio.preco = request.POST.get('preco')
+        anuncio.descricao = request.POST.get('descricao')
+
+        anuncio.save()
+
+        return redirect('anuncio', id=anuncio.id)
+
+    return render(request, 'editar_anuncio.html', {
+        'anuncio': anuncio
+    })
+
+@login_required
+def vender_anuncio(request, id):
+
+    anuncio = get_object_or_404(Anuncio, id=id)
+
+    if anuncio.usuario != request.user:
+        return redirect('anunciados')
+
+    anuncio.status = 'VENDIDO'
+    anuncio.save()
+
+    return redirect('anuncio', id=anuncio.id)
