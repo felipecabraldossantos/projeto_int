@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from decouple import config
 import os
+import dj_database_url
 
 load_dotenv()
 
@@ -86,6 +87,13 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv("DATABASE_URL")
+    )
+}
+
+'''
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
@@ -95,7 +103,7 @@ DATABASES = {
         'PORT': config('DB_PORT'),
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
